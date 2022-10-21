@@ -3,6 +3,16 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongoose = require('mongoose');
+
+const config = require ('./config').configuration
+
+//Configuracion de la base de datos
+mongoose.connect(config.mongodb.url);
+
+mongoose.connection.on('open',function(){
+  console.log("Database connection")
+});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
