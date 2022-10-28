@@ -46,8 +46,39 @@ async function findUsers(req, res){
         })
     }
 }
+async function login(req, res){
+    const userName = req.body.user;
+    const password = req.body.pass;
+    try{
+            const user = await User.findOne({
+                userName: userName,
+                password: password
+            })
+        if(user) {
+            res.status(200).json({
+                message: "Has iniciado sesion",
+                obj: user
+            })
+        }
+        else{
+            console.log("No")
+            res.status(500).json({
+                message:"Can't find user",
+                obj:null
+            })
+        }
+
+    }catch (e){
+        console.log(e)
+        res.status(500).json({
+            message:"Can't find user",
+            obj:null
+        })
+    }
+}
 
 module.exports = {
     createUser,
-    findUsers
+    findUsers,
+    login
 }

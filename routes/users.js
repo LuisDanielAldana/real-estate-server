@@ -9,6 +9,10 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/create', userController.createUser);
-router.get('/find',userController.findUsers)
+
+router.get('/find',userController.findUsers);
+
+router.post('/login',userController.login)
+
 
 module.exports = router;
