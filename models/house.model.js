@@ -1,36 +1,41 @@
 const mongoose = require('mongoose');
-const {Schema} = require("mongoose");
 
-const childrenSchema = new Schema(
+const childrenSchema = new mongoose.Schema(
     {
-        NombreConstruccion: String,
-        require: true
-    },
-    {
-        TipoConstruccion: String,
-        require: true
+        NombreConstruccion: {
+            type: String,
+            required: true
+        },
+        TipoConstruccion: {
+            type: String,
+            required: true
+        }
     }
 )
 
-const locationSchema = new Schema(
+const locationSchema = new mongoose.Schema(
     {
-        lat: Number,
-        require: true
-    },
-    {
-        lng: Number,
-        require: true
+        lat: {
+            type: Number,
+            required: true
+        },
+        lng: {
+            type: Number,
+            required: true
+        }
     }
 )
 
-const areaSchema = new Schema(
+const areaSchema = new mongoose.Schema(
     {
-        construccion: Number,
-        require: true
-    },
-    {
-        terreno: Number,
-        require: true
+        construccion: {
+            type: Number,
+            required: true
+        },
+        terreno: {
+            type: Number,
+            required: true
+        }
     }
 )
 
@@ -42,7 +47,7 @@ const HouseSchema = new mongoose.Schema(
         },
         apellidos: {
           type: String,
-          required: true
+          required: false
         },
         correo: {
             type: String,
@@ -60,9 +65,10 @@ const HouseSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        //houseNumber, street, district, city, postalCode, County, Country
         address: {
             type: String,
-            required: true
+            required: false
         },
         location:{
             type: locationSchema,
@@ -93,7 +99,7 @@ const HouseSchema = new mongoose.Schema(
         },
         construccion: {
             type: [childrenSchema],
-            required: false
+            required: true
         },
         bedrooms: {
           type: Number,
