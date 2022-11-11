@@ -26,19 +26,6 @@ const locationSchema = new mongoose.Schema(
     }
 )
 
-const areaSchema = new mongoose.Schema(
-    {
-        construccion: {
-            type: Number,
-            required: true
-        },
-        terreno: {
-            type: Number,
-            required: true
-        }
-    }
-)
-
 const HouseSchema = new mongoose.Schema(
     {
         nombre: {
@@ -47,7 +34,7 @@ const HouseSchema = new mongoose.Schema(
         },
         apellidos: {
           type: String,
-          required: false
+          required: true
         },
         correo: {
             type: String,
@@ -68,7 +55,7 @@ const HouseSchema = new mongoose.Schema(
         //houseNumber, street, district, city, postalCode, County, Country
         address: {
             type: String,
-            required: false
+            required: true
         },
         location:{
             type: locationSchema,
@@ -109,8 +96,12 @@ const HouseSchema = new mongoose.Schema(
           type: Number,
             required: true
         },
+        areaTerreno: {
+            type: Number,
+            required: true
+        },
         areaConstruccion: {
-            type: areaSchema,
+            type: Number,
             required: true
         }
 

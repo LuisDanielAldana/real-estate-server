@@ -2,12 +2,12 @@ const House = require('../models/house.model').House;
 
 async function createHouse(req, res){
     const nombre = req.body.nombre;
-    const apelllidos = req.body.apelllidos;
+    const apellidos = req.body.apellidos;
     const correo = req.body.correo;
     const telefono = req.body.telefono;
     const title = req.body.title;
     const description = req.body.description;
-    const addres = req.body.addres;
+    const address = req.body.address;
     const location = req.body.location;
     const tipo = req.body.tipo;
     const price = req.body.price;
@@ -16,17 +16,18 @@ async function createHouse(req, res){
     const construccion = req.body.construccion;
     const bedrooms = req.body.bedrooms;
     const bathrooms = req.body.bathrooms;
+    const areaTerreno = req.body.areaTerreno;
     const areaConstruccion = req.body.areaConstruccion;
 
         try {
             const newHouse = await new House({
                 nombre: nombre,
-                apelllidos: apelllidos,
+                apellidos: apellidos,
                 correo: correo,
                 telefono: telefono,
                 title: title,
                 description: description,
-                addres: addres,
+                address: address,
                 location: location,
                 tipo: tipo,
                 price: price,
@@ -35,7 +36,8 @@ async function createHouse(req, res){
                 construccion: construccion,
                 bedrooms: bedrooms,
                 bathrooms: bathrooms,
-                areaConstruccion: areaConstruccion,
+                areaTerreno: areaTerreno,
+                areaConstruccion: areaConstruccion
 
 
             }).save();
