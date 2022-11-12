@@ -1,4 +1,6 @@
 const User = require('../models/user.model').User;
+const {generateJWT} = require('./auth.controller')
+
 async function createUser(req, res){
     const firstName = req.body.fn;
     const lastName = req.body.ln;
@@ -55,9 +57,12 @@ async function login(req, res){
                 password: password
             })
         if(user) {
+            let token = generateJWT
+            console.log(token)
             res.status(200).json({
                 message: "Has iniciado sesion",
-                obj: user
+                obj: user,
+                token: token.generateJWT()
             })
         }
         else{

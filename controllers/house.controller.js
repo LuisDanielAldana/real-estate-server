@@ -54,9 +54,60 @@ async function createHouse(req, res){
         }
 
 }
+
+
+
 async function findHouses(req, res){
     try {
-        const house = await House.find({})
+        let query
+        const houseType = req.body.houseType
+        const buildingType = req.body.buildingType
+        const minPrice = req.body.minPrice
+        const maxPrice = req.body.maxPrice
+        const houseLong = req.body.houseLong
+        const houseLat = req.body.houseLat
+
+        if (houseType || buildingType || minPrice || maxPrice || (houseLong && houseLat) ) {
+            query = {$and: []};
+
+            if (houseType) {
+                query["$and"].push({houseType: houseType});
+            }
+
+            if (buildingType) {
+                query["$and"].push({buildingType: buildingType});
+            }
+
+            if (minPrice) {
+                query["$and"].push({price: {"$gte": minPrice}});
+            }
+
+            if (maxPrice) {
+                query["$and"].push({price: {"$lte": maxPrice}})
+            }
+
+            if (houseLong && houseLat) {
+                query["$and"].push(
+                    {
+                        location: {
+                            $near: {
+                                $maxDistance: 1000,
+                                $geometry: {
+                                    type: "Point",
+                                    coordinates: [houseLong, houseLat]
+                                }
+                            }
+                        }
+                    }
+                )
+            }
+
+        } else {
+            query = {};
+        }
+        const house = await House.find(
+            query
+        )
         res.status(200).json({
             message: "All houses in DB:",
             obj: house
@@ -69,9 +120,59 @@ async function findHouses(req, res){
         })
     }
 }
+async function addFavorite(req, res){
+    try{
+        await House.updateOne(
+            {_id: _id},
+            {favorite: true}
+        )
+    } catch (e){
+        console.error("Error Adding favorites")
+        res.status(500).json({
+            message: "Something happened when adding favorite houses",
+            obj: null
+        })
+    }
+}
+async function removeFavorite(req, res){
+    try{
+        await House.updateOne(
+            {_id: _id},
+            {favorite: false}
+        )
+    } catch (e){
+        console.error("Error removing favorites")
+        res.status(500).json({
+            message: "Something happened when removing favorite houses",
+            obj: null
+        })
+    }
+}
+async function findFavorites(req, res){
+    try {
+        const houses = await House.find(
+            {
+                favorite: true
+            }
+        )
+        res.status(200).json({
+            message: "Favorite Houses",
+            obj: houses
+        })
+    } catch (e){
+        console.error("Error Finding favorites")
+        res.status(500).json({
+            message: "Something happened when finding favorite houses",
+            obj: null
+        })
+    }
+}
 
 module.exports = {
     createHouse,
     findHouses,
+    addFavorite,
+    removeFavorite,
+    findFavorites
 
 }

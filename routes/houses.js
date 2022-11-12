@@ -12,5 +12,11 @@ router.post('/create', houseController.createHouse);
 
 router.get('/find',houseController.findHouses);
 
+router.get('/favorites',houseController.findFavorites)
+
+router.get('/addFavorite',houseController.addFavorite)
+
+router.get('/removeFavorite',houseController.removeFavorite)
+
 
 module.exports = router;

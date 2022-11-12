@@ -103,6 +103,11 @@ const HouseSchema = new mongoose.Schema(
         areaConstruccion: {
             type: Number,
             required: true
+        },
+        favorite: {
+            type: Boolean,
+            default: false,
+            required: false
         }
 
     }
