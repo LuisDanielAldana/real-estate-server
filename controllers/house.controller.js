@@ -110,7 +110,8 @@ async function findHouses(req, res){
         )
         res.status(200).json({
             message: "All houses in DB:",
-            obj: house
+            obj: house,
+            mode: 'no-cors'
         })
     } catch (err){
         console.error("Error Finding Houses")
@@ -169,11 +170,26 @@ async function findFavorites(req, res){
 }
 
 async function editHouse(req, res){
+    const title = req.body.title
+    const description = req.body.description
+    const addres = req.body.address
+    const tipo = req.body.tipo
+    const buildingType = req.body.buildingType
+    const price = req.body.price
+    const bedrooms = req.body.bedrooms
+    const bathrooms = req.body.bathrooms
     try {
         const editedHouse = await House.updateOne(
             {_id:_id},
             {
-
+                title:title,
+                description:description,
+                addres:addres,
+                tipo:tipo,
+                buildingType:buildingType,
+                price:price,
+                bedrooms:bedrooms,
+                bathrooms:bathrooms
             }
         )
     } catch (e){
