@@ -13,7 +13,6 @@ mongoose.connect(config.mongodb.url);
 
 
 app.use(cors({
-  origin: 'https://parcialv2.pages.dev/start'
 }));
 
 mongoose.connection.on('open',function(){
