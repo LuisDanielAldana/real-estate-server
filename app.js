@@ -10,6 +10,11 @@ const config = require ('./config').configuration
 //Configuracion de la base de datos
 mongoose.connect(config.mongodb.url);
 
+const cors = require('cors');
+app.use(cors({
+  origin: '*'
+}));
+
 mongoose.connection.on('open',function(){
   console.log("Database connection")
 });
