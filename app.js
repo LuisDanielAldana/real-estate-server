@@ -4,15 +4,16 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const config = require ('./config').configuration
 
 //Configuracion de la base de datos
 mongoose.connect(config.mongodb.url);
 
-const cors = require('cors');
+
 app.use(cors({
-  origin: '*'
+  origin: 'https://parcialv2.pages.dev/start'
 }));
 
 mongoose.connection.on('open',function(){
