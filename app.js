@@ -57,6 +57,7 @@ app.use(function(err, req, res, next) {
 });
 
 app.use(cors({
+  origin: 'https://real-red-goat-yoke.cyclic.app/houses/find'
 }));
 
 module.exports = app;

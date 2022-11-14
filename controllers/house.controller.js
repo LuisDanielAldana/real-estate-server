@@ -168,18 +168,18 @@ async function findFavorites(req, res){
     }
 }
 
-// async function editHouse(req, res){
-//     try {
-//         const editedHouse = await House.updateOne(
-//             {_id:_id},
-//             {
-//
-//             }
-//         )
-//     } catch (e){
-//         console.log(e)
-//     }
-// }
+async function editHouse(req, res){
+    try {
+        const editedHouse = await House.updateOne(
+            {_id:_id},
+            {
+
+            }
+        )
+    } catch (e){
+        console.log(e)
+    }
+}
 
 module.exports = {
     createHouse,
