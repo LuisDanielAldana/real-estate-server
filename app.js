@@ -12,8 +12,7 @@ const config = require ('./config').configuration
 mongoose.connect(config.mongodb.url);
 
 
-app.use(cors({
-}));
+
 
 mongoose.connection.on('open',function(){
   console.log("Database connection")
@@ -56,5 +55,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.use(cors({
+  origin: '*'
+}));
 
 module.exports = app;
