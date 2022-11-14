@@ -24,6 +24,7 @@ var authRouter = require('./routes/auth');
 var housesRouter = require('./routes/houses')
 
 var app = express();
+app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -56,6 +57,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.use(cors());
+
 
 module.exports = app;
