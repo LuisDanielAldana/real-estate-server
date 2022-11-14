@@ -202,6 +202,7 @@ module.exports = {
     findHouses,
     addFavorite,
     removeFavorite,
-    findFavorites
+    findFavorites,
+    editHouse
 
 }

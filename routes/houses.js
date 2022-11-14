@@ -18,5 +18,7 @@ router.get('/addFavorite',houseController.addFavorite)
 
 router.get('/removeFavorite',houseController.removeFavorite)
 
+router.get('/editHouse', houseController.editHouse)
+
 
 module.exports = router;
