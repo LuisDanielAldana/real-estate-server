@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/create', houseController.createHouse);
 
-router.get('/find',houseController.findHouses);
+router.post('/find',houseController.findHouses);
 
 router.get('/favorites',houseController.findFavorites)
 
