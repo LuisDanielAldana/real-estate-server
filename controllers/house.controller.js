@@ -66,6 +66,7 @@ async function findHouses(req, res){
         const maxPrice = req.body.maxPrice
         const houseLong = req.body.lng
         const houseLat = req.body.lat
+        const _id = req.body._id
 
         if (tipo || buildingType || minPrice || maxPrice || (houseLong && houseLat) ) {
             query = {$and: []};
@@ -84,6 +85,9 @@ async function findHouses(req, res){
 
             if (maxPrice) {
                 query["$and"].push({price: {"$lte": maxPrice}})
+            }
+            if (_id) {
+                query["$and"].push({_id: _id});
             }
 
             if (houseLong && houseLat) {
