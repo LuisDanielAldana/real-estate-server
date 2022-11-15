@@ -68,7 +68,7 @@ async function findHouses(req, res){
         const houseLat = req.body.lat
         const _id = req.body._id
 
-        if (tipo || buildingType || minPrice || maxPrice || (houseLong && houseLat) ) {
+        if (tipo || buildingType || minPrice || maxPrice || (houseLong && houseLat) || _id ) {
             query = {$and: []};
 
             if (tipo) {
