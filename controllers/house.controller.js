@@ -174,6 +174,7 @@ async function findFavorites(req, res){
 }
 
 async function editHouse(req, res){
+    const _id = req.body._id
     const title = req.body.title
     const description = req.body.description
     const addres = req.body.address
