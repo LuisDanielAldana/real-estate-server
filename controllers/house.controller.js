@@ -196,8 +196,16 @@ async function editHouse(req, res){
                 bathrooms:bathrooms
             }
         )
+        res.status(200).json({
+            message: "Edited House",
+            obj: editedHouse
+        })
     } catch (e){
         console.log(e)
+        res.status(500).json({
+            message: "Something happened when editing houses",
+            obj: null
+        })
     }
 }
 
