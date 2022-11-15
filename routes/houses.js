@@ -12,11 +12,11 @@ router.post('/create', houseController.createHouse);
 
 router.post('/find',houseController.findHouses);
 
-router.get('/favorites',houseController.findFavorites)
+router.post('/favorites',houseController.findFavorites)
 
-router.get('/addFavorite',houseController.addFavorite)
+router.post('/addFavorite',houseController.addFavorite)
 
-router.get('/removeFavorite',houseController.removeFavorite)
+router.post('/removeFavorite',houseController.removeFavorite)
 
 router.post('/editHouse', houseController.editHouse)
 
