@@ -115,7 +115,6 @@ async function findHouses(req, res){
         res.status(200).json({
             message: "All houses in DB:",
             obj: house,
-            mode: 'no-cors'
         })
     } catch (err){
         console.error("Error Finding Houses")
