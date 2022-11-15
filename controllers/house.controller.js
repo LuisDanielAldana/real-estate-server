@@ -59,7 +59,9 @@ async function createHouse(req, res){
 
 async function findHouses(req, res){
     try {
+        console.log(req.body)
         let query
+
         const tipo = req.body.tipo
         const buildingType = req.body.buildingType
         const minPrice = req.body.minPrice
@@ -67,6 +69,7 @@ async function findHouses(req, res){
         const houseLong = req.body.lng
         const houseLat = req.body.lat
         const _id = req.body._id
+
 
         if (tipo || buildingType || minPrice || maxPrice || (houseLong && houseLat) || _id ) {
             query = {$and: []};
