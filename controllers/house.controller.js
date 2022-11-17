@@ -126,6 +126,7 @@ async function findHouses(req, res){
     }
 }
 async function addFavorite(req, res){
+    const _id = req.body._id
     try{
         await House.updateOne(
             {_id: _id},
@@ -140,6 +141,7 @@ async function addFavorite(req, res){
     }
 }
 async function removeFavorite(req, res){
+    const _id = req.body._id
     try{
         await House.updateOne(
             {_id: _id},
