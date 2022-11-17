@@ -1,44 +1,43 @@
 const House = require('../models/house.model').House;
 
 async function createHouse(req, res){
-    const nombre = req.body.nombre;
-    const apellidos = req.body.apellidos;
-    const correo = req.body.correo;
-    const telefono = req.body.telefono;
-    const title = req.body.title;
+    const ownerName = req.body.ownerName;
+    const ownerEmail = req.body.ownerEmail;
+    const ownerPhone = req.body.ownerPhone;
+    const houseHeader = req.body.houseHeader;
     const description = req.body.description;
     const address = req.body.address;
     const location = req.body.location;
-    const tipo = req.body.tipo;
+    const dealType = req.body.dealType;
     const price = req.body.price;
     const buildingType = req.body.buildingType;
-    const estado = req.body.estado;
-    const construccion = req.body.construccion;
+    const availability = req.body.availability;
+    const extraConstruction = req.body.extraConstruction;
     const bedrooms = req.body.bedrooms;
     const bathrooms = req.body.bathrooms;
-    const areaTerreno = req.body.areaTerreno;
-    const areaConstruccion = req.body.areaConstruccion;
+    const terrainArea = req.body.terrainArea;
+    const buildingArea = req.body.buildingArea;
+    const favorite = req.body.favorite
 
         try {
             const newHouse = await new House({
-                nombre: nombre,
-                apellidos: apellidos,
-                correo: correo,
-                telefono: telefono,
-                title: title,
+                ownerName: ownerName,
+                ownerEmail: ownerEmail,
+                ownerPhone: ownerPhone,
+                houseHeader: houseHeader,
                 description: description,
                 address: address,
                 location: location,
-                tipo: tipo,
+                dealType: dealType,
                 price: price,
                 buildingType: buildingType,
-                estado: estado,
-                construccion: construccion,
+                availability: availability,
+                extraConstruction: extraConstruction,
                 bedrooms: bedrooms,
                 bathrooms: bathrooms,
-                areaTerreno: areaTerreno,
-                areaConstruccion: areaConstruccion
-
+                terrainArea: terrainArea,
+                buildingArea: buildingArea,
+                favorite: favorite
 
             }).save();
             res.status(200).json({
@@ -61,8 +60,7 @@ async function findHouses(req, res){
     try {
         console.log(req.body)
         let query
-
-        const tipo = req.body.tipo
+        const dealType = req.body.dealType
         const buildingType = req.body.buildingType
         const minPrice = req.body.minPrice
         const maxPrice = req.body.maxPrice
@@ -71,11 +69,11 @@ async function findHouses(req, res){
         const _id = req.body._id
 
 
-        if (tipo || buildingType || minPrice || maxPrice || (houseLong && houseLat) || _id ) {
+        if (dealType || buildingType || minPrice || maxPrice || (houseLong && houseLat) || _id ) {
             query = {$and: []};
 
-            if (tipo) {
-                query["$and"].push({tipo: tipo});
+            if (dealType) {
+                query["$and"].push({dealType: dealType});
             }
 
             if (buildingType) {
@@ -177,44 +175,44 @@ async function findFavorites(req, res){
 
 async function editHouse(req, res){
     const _id = req.body._id
-    const nombre = req.body.nombre;
-    const apellidos = req.body.apellidos;
-    const correo = req.body.correo;
-    const telefono = req.body.telefono;
-    const title = req.body.title;
+    const ownerName = req.body.ownerName;
+    const ownerEmail = req.body.ownerEmail;
+    const ownerPhone = req.body.ownerPhone;
+    const houseHeader = req.body.houseHeader;
     const description = req.body.description;
     const address = req.body.address;
     const location = req.body.location;
-    const tipo = req.body.tipo;
+    const dealType = req.body.dealType;
     const price = req.body.price;
     const buildingType = req.body.buildingType;
-    const estado = req.body.estado;
-    const construccion = req.body.construccion;
+    const availability = req.body.availability;
+    const extraConstruction = req.body.extraConstruction;
     const bedrooms = req.body.bedrooms;
     const bathrooms = req.body.bathrooms;
-    const areaTerreno = req.body.areaTerreno;
-    const areaConstruccion = req.body.areaConstruccion;
+    const terrainArea = req.body.terrainArea;
+    const buildingArea = req.body.buildingArea;
+    const favorite = req.body.favorite
     try {
         const editedHouse = await House.updateOne(
             {_id:_id},
             {
-                nombre: nombre,
-                apellidos: apellidos,
-                correo: correo,
-                telefono: telefono,
-                title: title,
+                ownerName: ownerName,
+                ownerEmail: ownerEmail,
+                ownerPhone: ownerPhone,
+                houseHeader: houseHeader,
                 description: description,
                 address: address,
                 location: location,
-                tipo: tipo,
+                dealType: dealType,
                 price: price,
                 buildingType: buildingType,
-                estado: estado,
-                construccion: construccion,
+                availability: availability,
+                extraConstruction: extraConstruction,
                 bedrooms: bedrooms,
                 bathrooms: bathrooms,
-                areaTerreno: areaTerreno,
-                areaConstruccion: areaConstruccion
+                terrainArea: terrainArea,
+                buildingArea: buildingArea,
+                favorite: favorite
             }
         )
         res.status(200).json({

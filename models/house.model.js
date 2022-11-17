@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const childrenSchema = new mongoose.Schema(
+const extraConstructionSchema = new mongoose.Schema(
     {
-        NombreConstruccion: {
+        buildingName: {
             type: String,
             required: true
         },
-        TipoConstruccion: {
+        constructionType: {
             type: String,
             required: true
         }
@@ -28,23 +28,19 @@ const locationSchema = new mongoose.Schema(
 
 const HouseSchema = new mongoose.Schema(
     {
-        nombre: {
+        ownerName: {
           type: String,
           required: true
         },
-        apellidos: {
-          type: String,
-          required: true
-        },
-        correo: {
+        ownerEmail: {
             type: String,
             required: true
         },
-        telefono: {
-          type: Number,
+        ownerPhone: {
+          type: String,
           required: true
         },
-        title: {
+        houseHeader: {
             type: String,
             required: true
         },
@@ -66,7 +62,7 @@ const HouseSchema = new mongoose.Schema(
             required: false
         },
         //Venta o Renta
-        tipo:{
+        dealType:{
             type: String,
             required: true
         },
@@ -80,12 +76,12 @@ const HouseSchema = new mongoose.Schema(
             required: true
         },
         //Rentada, disponible, vendida
-        estado:{
+        availability:{
             type: String,
             required: true
         },
-        construccion: {
-            type: [childrenSchema],
+        extraConstruction: {
+            type: [extraConstructionSchema],
             required: true
         },
         bedrooms: {
@@ -96,11 +92,11 @@ const HouseSchema = new mongoose.Schema(
           type: Number,
             required: true
         },
-        areaTerreno: {
+        terrainArea: {
             type: Number,
             required: true
         },
-        areaConstruccion: {
+        buildingArea: {
             type: Number,
             required: true
         },

@@ -1,18 +1,22 @@
 const User = require('../models/user.model').User;
 
 async function createUser(req, res){
-    const firstName = req.body.fn;
-    const lastName = req.body.ln;
-    const userName = req.body.un;
-    const password = req.body.pss;
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
+    const username = req.body.username;
+    const password = req.body.password;
+    const email = req.req.body.email;
+    const phone = req.body.phone
 
-    if (firstName && lastName && userName && password){
+    if (firstname && lastname && username && password && email){
         try {
             const newUser = await new User({
-                firstName: firstName,
-                lastName: lastName,
-                userName: userName,
-                password: password
+                firstname: firstname,
+                lastname: lastname,
+                username: username,
+                password: password,
+                email: email,
+                phone: phone
             }).save();
             res.status(200).json({
                 message: "User Created",
@@ -48,11 +52,11 @@ async function findUsers(req, res){
     }
 }
 async function login(req, res){
-    const userName = req.body.user;
+    const username = req.body.user;
     const password = req.body.pass;
     try{
             const user = await User.findOne({
-                userName: userName,
+                username: username,
                 password: password
             })
         if(user) {
