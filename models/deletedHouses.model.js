@@ -99,13 +99,7 @@ const deletedHouseSchema = new mongoose.Schema(
         buildingArea: {
             type: Number,
             required: true
-        },
-        favorite: {
-            type: Boolean,
-            default: false,
-            required: false
         }
-
     }
 );
 

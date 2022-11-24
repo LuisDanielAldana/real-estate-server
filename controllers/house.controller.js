@@ -18,7 +18,6 @@ async function createHouse(req, res){
     const bathrooms = req.body.bathrooms;
     const terrainArea = req.body.terrainArea;
     const buildingArea = req.body.buildingArea;
-    const favorite = req.body.favorite
 
         try {
             const newHouse = await new House({
@@ -37,8 +36,7 @@ async function createHouse(req, res){
                 bedrooms: bedrooms,
                 bathrooms: bathrooms,
                 terrainArea: terrainArea,
-                buildingArea: buildingArea,
-                favorite: favorite
+                buildingArea: buildingArea
 
             }).save();
             res.status(200).json({
@@ -202,7 +200,6 @@ async function editHouse(req, res){
     const bathrooms = req.body.bathrooms;
     const terrainArea = req.body.terrainArea;
     const buildingArea = req.body.buildingArea;
-    const favorite = req.body.favorite
     try {
         const editedHouse = await House.updateOne(
             {_id:_id},
@@ -222,8 +219,7 @@ async function editHouse(req, res){
                 bedrooms: bedrooms,
                 bathrooms: bathrooms,
                 terrainArea: terrainArea,
-                buildingArea: buildingArea,
-                favorite: favorite
+                buildingArea: buildingArea
             }
         )
         res.status(200).json({
@@ -263,7 +259,6 @@ async function deleteHouse(req, res){
                 bathrooms: houseTodelete.bathrooms,
                 terrainArea: houseTodelete.terrainArea,
                 buildingArea: houseTodelete.buildingArea,
-                favorite: houseTodelete.favorite
             }
         ).save()
         const deletedHouse = await House.deleteOne(
@@ -271,8 +266,7 @@ async function deleteHouse(req, res){
         )
         res.status(200).json({
             message: "House Deleted",
-            obj: deletedHouse,
-            obj2:backupHouse
+            obj: deletedHouse
         })
     } catch (e) {
         console.log(e)
