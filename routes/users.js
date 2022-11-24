@@ -13,7 +13,9 @@ router.post('/create', userController.createUser);
 
 router.get('/find', userController.findUsers);
 
-router.post('/login',userController.login)
+router.post('/login',userController.login);
+
+router.post('/delete',userController.deleteUser)
 
 
 module.exports = router;

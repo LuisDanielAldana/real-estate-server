@@ -1,3 +1,5 @@
+const House = require("../models/house.model").House;
+const DeleteUser = require("../models/deletedUser.model").DeletedUser;
 const User = require('../models/user.model').User;
 
 async function createUser(req, res){
@@ -5,7 +7,7 @@ async function createUser(req, res){
     const lastname = req.body.lastname;
     const username = req.body.username;
     const password = req.body.password;
-    const email = req.req.body.email;
+    const email = req.body.email;
     const phone = req.body.phone
 
     if (firstname && lastname && username && password && email){
@@ -82,12 +84,42 @@ async function login(req, res){
     }
 }
 
-async function removeUser(req, res){
-
+async function deleteUser(req, res){
+    const _id = req.body._id
+    try{
+        const userTodelete = await User.findOne(
+            {_id: _id}
+        )
+        console.log(userTodelete)
+        const backupUser = await new DeleteUser(
+            {
+                firstname: userTodelete.firstname,
+                lastname: userTodelete.lastname,
+                username: userTodelete.username,
+                password: userTodelete.password,
+                email: userTodelete.email,
+                phone: userTodelete.phone
+            }
+        ).save()
+        const deletedUser = await User.deleteOne(
+            {_id: _id}
+        )
+        res.status(200).json({
+            message: "user Deleted",
+            obj: deletedUser
+        })
+    } catch (e) {
+        console.log(e)
+        res.status(400).json({
+            message: "Something happened when deleting user",
+            obj: null
+        })
+    }
 }
 
 module.exports = {
     createUser,
     findUsers,
-    login
+    login,
+    deleteUser
 }
