@@ -24,7 +24,7 @@ async function createUser(req, res){
             })
         } catch (err){
             console.error(err);
-            res.status(500).json({
+            res.status(400).json({
                 message: "Something happened when storing user",
                 obj: null
             })
@@ -45,7 +45,7 @@ async function findUsers(req, res){
         })
     } catch (err){
         console.error("Error Finding User")
-        res.status(500).json({
+        res.status(400).json({
             message: "Something happened when finding user",
             obj: null
         })
@@ -67,7 +67,7 @@ async function login(req, res){
         }
         else{
             console.log("No")
-            res.status(500).json({
+            res.status(400).json({
                 message:"Can't find user",
                 obj:null
             })
@@ -75,11 +75,15 @@ async function login(req, res){
 
     }catch (e){
         console.log(e)
-        res.status(500).json({
+        res.status(400).json({
             message:"Can't find user",
             obj:null
         })
     }
+}
+
+async function removeUser(req, res){
+
 }
 
 module.exports = {

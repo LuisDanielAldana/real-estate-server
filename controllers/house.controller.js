@@ -1,3 +1,4 @@
+const DeleteHouse = require("../models/deletedHouses.model").deletedHouse;
 const House = require('../models/house.model').House;
 
 async function createHouse(req, res){
@@ -46,7 +47,7 @@ async function createHouse(req, res){
             })
         } catch (err){
             console.error(err);
-            res.status(500).json({
+            res.status(400).json({
                 message: "Something happened when storing house",
                 obj: null
             })
@@ -119,7 +120,7 @@ async function findHouses(req, res){
         })
     } catch (err){
         console.error("Error Finding Houses")
-        res.status(500).json({
+        res.status(400).json({
             message: "Something happened when finding houses",
             obj: null
         })
@@ -134,7 +135,7 @@ async function addFavorite(req, res){
         )
     } catch (e){
         console.error("Error Adding favorites")
-        res.status(500).json({
+        res.status(400).json({
             message: "Something happened when adding favorite houses",
             obj: null
         })
@@ -149,7 +150,7 @@ async function removeFavorite(req, res){
         )
     } catch (e){
         console.error("Error removing favorites")
-        res.status(500).json({
+        res.status(400).json({
             message: "Something happened when removing favorite houses",
             obj: null
         })
@@ -168,7 +169,7 @@ async function findFavorites(req, res){
         })
     } catch (e){
         console.error("Error Finding favorites")
-        res.status(500).json({
+        res.status(400).json({
             message: "Something happened when finding favorite houses",
             obj: null
         })
@@ -223,8 +224,52 @@ async function editHouse(req, res){
         })
     } catch (e){
         console.log(e)
-        res.status(500).json({
+        res.status(400).json({
             message: "Something happened when editing houses",
+            obj: null
+        })
+    }
+}
+async function deleteHouse(req, res){
+    const _id = req.body._id
+    try{
+        const houseTodelete = await House.findOne(
+            {_id: _id}
+        )
+        console.log(houseTodelete)
+        const backupHouse = await new DeleteHouse(
+            {
+                ownerName: houseTodelete.ownerName,
+                ownerEmail: houseTodelete.ownerEmail,
+                ownerPhone: houseTodelete.ownerPhone,
+                houseHeader: houseTodelete.houseHeader,
+                description: houseTodelete.description,
+                address: houseTodelete.address,
+                location: houseTodelete.location,
+                dealType: houseTodelete.dealType,
+                price: houseTodelete.price,
+                buildingType: houseTodelete.buildingType,
+                availability: houseTodelete.availability,
+                extraConstruction: houseTodelete.extraConstruction,
+                bedrooms: houseTodelete.bedrooms,
+                bathrooms: houseTodelete.bathrooms,
+                terrainArea: houseTodelete.terrainArea,
+                buildingArea: houseTodelete.buildingArea,
+                favorite: houseTodelete.favorite
+            }
+        ).save()
+        const deletedHouse = await House.deleteOne(
+            {_id: _id}
+        )
+        res.status(200).json({
+            message: "House Deleted",
+            obj: deletedHouse,
+            obj2:backupHouse
+        })
+    } catch (e) {
+        console.log(e)
+        res.status(400).json({
+            message: "Something happened when deleting house",
             obj: null
         })
     }
@@ -236,6 +281,7 @@ module.exports = {
     addFavorite,
     removeFavorite,
     findFavorites,
-    editHouse
+    editHouse,
+    deleteHouse
 
 }
