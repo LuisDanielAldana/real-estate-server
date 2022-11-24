@@ -129,10 +129,14 @@ async function findHouses(req, res){
 async function addFavorite(req, res){
     const _id = req.body._id
     try{
-        await House.updateOne(
+        const favHouse = await House.updateOne(
             {_id: _id},
-            {favorite: true}
+            {favorite: "true"}
         )
+        res.status(200).json({
+            message: "House added to favorite:",
+            obj: favHouse,
+        })
     } catch (e){
         console.error("Error Adding favorites")
         res.status(400).json({
@@ -144,10 +148,14 @@ async function addFavorite(req, res){
 async function removeFavorite(req, res){
     const _id = req.body._id
     try{
-        await House.updateOne(
+        const unfavHouse = await House.updateOne(
             {_id: _id},
             {favorite: false}
         )
+        res.status(200).json({
+            message: "House removed from favorite:",
+            obj: unfavHouse,
+        })
     } catch (e){
         console.error("Error removing favorites")
         res.status(400).json({
