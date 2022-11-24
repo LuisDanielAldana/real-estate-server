@@ -20,5 +20,7 @@ router.post('/removeFavorite',houseController.removeFavorite)
 
 router.post('/editHouse', houseController.editHouse)
 
+router.post('/deleteHouse', houseController.deleteHouse)
+
 
 module.exports = router;

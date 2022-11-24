@@ -1,44 +1,44 @@
+const DeleteHouse = require("../models/deletedHouses.model").deletedHouse;
 const House = require('../models/house.model').House;
 
 async function createHouse(req, res){
-    const nombre = req.body.nombre;
-    const apellidos = req.body.apellidos;
-    const correo = req.body.correo;
-    const telefono = req.body.telefono;
-    const title = req.body.title;
+    const ownerName = req.body.ownerName;
+    const ownerEmail = req.body.ownerEmail;
+    const ownerPhone = req.body.ownerPhone;
+    const houseHeader = req.body.houseHeader;
     const description = req.body.description;
     const address = req.body.address;
     const location = req.body.location;
-    const tipo = req.body.tipo;
+    const dealType = req.body.dealType;
     const price = req.body.price;
     const buildingType = req.body.buildingType;
-    const estado = req.body.estado;
-    const construccion = req.body.construccion;
+    const availability = req.body.availability;
+    const extraConstruction = req.body.extraConstruction;
     const bedrooms = req.body.bedrooms;
     const bathrooms = req.body.bathrooms;
-    const areaTerreno = req.body.areaTerreno;
-    const areaConstruccion = req.body.areaConstruccion;
+    const terrainArea = req.body.terrainArea;
+    const buildingArea = req.body.buildingArea;
+    const favorite = req.body.favorite
 
         try {
             const newHouse = await new House({
-                nombre: nombre,
-                apellidos: apellidos,
-                correo: correo,
-                telefono: telefono,
-                title: title,
+                ownerName: ownerName,
+                ownerEmail: ownerEmail,
+                ownerPhone: ownerPhone,
+                houseHeader: houseHeader,
                 description: description,
                 address: address,
                 location: location,
-                tipo: tipo,
+                dealType: dealType,
                 price: price,
                 buildingType: buildingType,
-                estado: estado,
-                construccion: construccion,
+                availability: availability,
+                extraConstruction: extraConstruction,
                 bedrooms: bedrooms,
                 bathrooms: bathrooms,
-                areaTerreno: areaTerreno,
-                areaConstruccion: areaConstruccion
-
+                terrainArea: terrainArea,
+                buildingArea: buildingArea,
+                favorite: favorite
 
             }).save();
             res.status(200).json({
@@ -47,7 +47,7 @@ async function createHouse(req, res){
             })
         } catch (err){
             console.error(err);
-            res.status(500).json({
+            res.status(400).json({
                 message: "Something happened when storing house",
                 obj: null
             })
@@ -61,8 +61,7 @@ async function findHouses(req, res){
     try {
         console.log(req.body)
         let query
-
-        const tipo = req.body.tipo
+        const dealType = req.body.dealType
         const buildingType = req.body.buildingType
         const minPrice = req.body.minPrice
         const maxPrice = req.body.maxPrice
@@ -71,11 +70,11 @@ async function findHouses(req, res){
         const _id = req.body._id
 
 
-        if (tipo || buildingType || minPrice || maxPrice || (houseLong && houseLat) || _id ) {
+        if (dealType || buildingType || minPrice || maxPrice || (houseLong && houseLat) || _id ) {
             query = {$and: []};
 
-            if (tipo) {
-                query["$and"].push({tipo: tipo});
+            if (dealType) {
+                query["$and"].push({dealType: dealType});
             }
 
             if (buildingType) {
@@ -121,7 +120,7 @@ async function findHouses(req, res){
         })
     } catch (err){
         console.error("Error Finding Houses")
-        res.status(500).json({
+        res.status(400).json({
             message: "Something happened when finding houses",
             obj: null
         })
@@ -140,7 +139,7 @@ async function addFavorite(req, res){
         })
     } catch (e){
         console.error("Error Adding favorites")
-        res.status(500).json({
+        res.status(400).json({
             message: "Something happened when adding favorite houses",
             obj: null
         })
@@ -159,7 +158,7 @@ async function removeFavorite(req, res){
         })
     } catch (e){
         console.error("Error removing favorites")
-        res.status(500).json({
+        res.status(400).json({
             message: "Something happened when removing favorite houses",
             obj: null
         })
@@ -178,7 +177,7 @@ async function findFavorites(req, res){
         })
     } catch (e){
         console.error("Error Finding favorites")
-        res.status(500).json({
+        res.status(400).json({
             message: "Something happened when finding favorite houses",
             obj: null
         })
@@ -187,44 +186,44 @@ async function findFavorites(req, res){
 
 async function editHouse(req, res){
     const _id = req.body._id
-    const nombre = req.body.nombre;
-    const apellidos = req.body.apellidos;
-    const correo = req.body.correo;
-    const telefono = req.body.telefono;
-    const title = req.body.title;
+    const ownerName = req.body.ownerName;
+    const ownerEmail = req.body.ownerEmail;
+    const ownerPhone = req.body.ownerPhone;
+    const houseHeader = req.body.houseHeader;
     const description = req.body.description;
     const address = req.body.address;
     const location = req.body.location;
-    const tipo = req.body.tipo;
+    const dealType = req.body.dealType;
     const price = req.body.price;
     const buildingType = req.body.buildingType;
-    const estado = req.body.estado;
-    const construccion = req.body.construccion;
+    const availability = req.body.availability;
+    const extraConstruction = req.body.extraConstruction;
     const bedrooms = req.body.bedrooms;
     const bathrooms = req.body.bathrooms;
-    const areaTerreno = req.body.areaTerreno;
-    const areaConstruccion = req.body.areaConstruccion;
+    const terrainArea = req.body.terrainArea;
+    const buildingArea = req.body.buildingArea;
+    const favorite = req.body.favorite
     try {
         const editedHouse = await House.updateOne(
             {_id:_id},
             {
-                nombre: nombre,
-                apellidos: apellidos,
-                correo: correo,
-                telefono: telefono,
-                title: title,
+                ownerName: ownerName,
+                ownerEmail: ownerEmail,
+                ownerPhone: ownerPhone,
+                houseHeader: houseHeader,
                 description: description,
                 address: address,
                 location: location,
-                tipo: tipo,
+                dealType: dealType,
                 price: price,
                 buildingType: buildingType,
-                estado: estado,
-                construccion: construccion,
+                availability: availability,
+                extraConstruction: extraConstruction,
                 bedrooms: bedrooms,
                 bathrooms: bathrooms,
-                areaTerreno: areaTerreno,
-                areaConstruccion: areaConstruccion
+                terrainArea: terrainArea,
+                buildingArea: buildingArea,
+                favorite: favorite
             }
         )
         res.status(200).json({
@@ -233,8 +232,52 @@ async function editHouse(req, res){
         })
     } catch (e){
         console.log(e)
-        res.status(500).json({
+        res.status(400).json({
             message: "Something happened when editing houses",
+            obj: null
+        })
+    }
+}
+async function deleteHouse(req, res){
+    const _id = req.body._id
+    try{
+        const houseTodelete = await House.findOne(
+            {_id: _id}
+        )
+        console.log(houseTodelete)
+        const backupHouse = await new DeleteHouse(
+            {
+                ownerName: houseTodelete.ownerName,
+                ownerEmail: houseTodelete.ownerEmail,
+                ownerPhone: houseTodelete.ownerPhone,
+                houseHeader: houseTodelete.houseHeader,
+                description: houseTodelete.description,
+                address: houseTodelete.address,
+                location: houseTodelete.location,
+                dealType: houseTodelete.dealType,
+                price: houseTodelete.price,
+                buildingType: houseTodelete.buildingType,
+                availability: houseTodelete.availability,
+                extraConstruction: houseTodelete.extraConstruction,
+                bedrooms: houseTodelete.bedrooms,
+                bathrooms: houseTodelete.bathrooms,
+                terrainArea: houseTodelete.terrainArea,
+                buildingArea: houseTodelete.buildingArea,
+                favorite: houseTodelete.favorite
+            }
+        ).save()
+        const deletedHouse = await House.deleteOne(
+            {_id: _id}
+        )
+        res.status(200).json({
+            message: "House Deleted",
+            obj: deletedHouse,
+            obj2:backupHouse
+        })
+    } catch (e) {
+        console.log(e)
+        res.status(400).json({
+            message: "Something happened when deleting house",
             obj: null
         })
     }
@@ -246,6 +289,7 @@ module.exports = {
     addFavorite,
     removeFavorite,
     findFavorites,
-    editHouse
+    editHouse,
+    deleteHouse
 
 }

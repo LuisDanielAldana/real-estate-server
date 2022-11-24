@@ -26,19 +26,19 @@ const locationSchema = new mongoose.Schema(
     }
 )
 
-const HouseSchema = new mongoose.Schema(
+const deletedHouseSchema = new mongoose.Schema(
     {
         ownerName: {
-          type: String,
-          required: true
+            type: String,
+            required: true
         },
         ownerEmail: {
             type: String,
             required: true
         },
         ownerPhone: {
-          type: String,
-          required: true
+            type: String,
+            required: true
         },
         houseHeader: {
             type: String,
@@ -85,11 +85,11 @@ const HouseSchema = new mongoose.Schema(
             required: true
         },
         bedrooms: {
-          type: Number,
-          required: true
+            type: Number,
+            required: true
         },
         bathrooms: {
-          type: Number,
+            type: Number,
             required: true
         },
         terrainArea: {
@@ -109,8 +109,8 @@ const HouseSchema = new mongoose.Schema(
     }
 );
 
-const House = mongoose.model('House',HouseSchema);
+const deletedHouse = mongoose.model('deletedHouse',deletedHouseSchema);
 
 module.exports = {
-    House
+    deletedHouse
 }
