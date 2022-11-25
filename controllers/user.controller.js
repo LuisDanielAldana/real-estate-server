@@ -117,9 +117,52 @@ async function deleteUser(req, res){
     }
 }
 
+async function addFavorite(req, res){
+    try {
+        const us_id = req.body.us_id
+        const house_id = req.body.house_id
+        const userFavorited = await User.updateOne(
+            {_id: us_id},
+            {$push: {favorites: house_id}}
+        )
+        res.status(200).json({
+            message: "House added to Favorites",
+            obj: userFavorited
+        })
+    } catch (e){
+        res.status(400).json({
+            message: "Can't add house to favorites",
+            obj: null
+        })
+    }
+
+}
+
+async function removeFavorite(req, res){
+    try {
+        const us_id = req.body.us_id
+        const house_id = req.body.house_id
+        const userFavorited = await User.updateOne(
+            {_id: us_id},
+            {$pull: {favorites: house_id}}
+        )
+        res.status(200).json({
+            message: "House removed from Favorites",
+            obj: userFavorited
+    })
+    } catch (e){
+        res.status(400).json({
+            message: "Can't remove house from favorites",
+            obj: null
+        })
+    }
+}
+
 module.exports = {
     createUser,
     findUsers,
     login,
-    deleteUser
+    deleteUser,
+    addFavorite,
+    removeFavorite
 }

@@ -15,7 +15,11 @@ router.get('/find', userController.findUsers);
 
 router.post('/login',userController.login);
 
-router.post('/delete',userController.deleteUser)
+router.post('/delete',userController.deleteUser);
+
+router.post('/addFavorite', userController.addFavorite);
+
+router.post('/removeFavorite', userController.removeFavorite);
 
 
 module.exports = router;

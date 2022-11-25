@@ -5,31 +5,38 @@ const UserSchema = new mongoose.Schema(
     {
        firstname: {
            type:String,
-           required:true
+           required:true,
+           default:""
        } ,
         lastname: {
            type: String,
-            required: true
+            required: true,
+            default:""
         },
         username: {
            username: String,
+            default:""
 
         },
         password: {
            type: String,
-            required: true
+            required: true,
+            default:""
         },
         email: {
            type: String,
-            required: true
+            required: true,
+            default:""
         },
         phone: {
            type: String,
-            required: true
+            required: true,
+            default:""
         },
         favorites: {
            type: [mongoose.Schema.Types.ObjectId],
-            ref: "House"
+            ref: "House",
+            default:[""]
 
         }
     }
