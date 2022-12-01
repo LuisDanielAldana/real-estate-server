@@ -65,7 +65,7 @@ const HouseSchema = new mongoose.Schema(
         },
         location:{
             type: locationSchema,
-            required: true
+            required: false
         },
         image: {
             type: [String],
@@ -97,7 +97,7 @@ const HouseSchema = new mongoose.Schema(
         },
         extraConstruction: {
             type: [extraConstructionSchema],
-            required: true
+            required: false
         },
         bedrooms: {
           type: Number,

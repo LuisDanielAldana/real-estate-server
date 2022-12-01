@@ -8,11 +8,10 @@ const cors = require('cors');
 
 const config = require ('./config').configuration
 
+require('dotenv').config()
+
 //Configuracion de la base de datos
 mongoose.connect(config.mongodb.url);
-
-
-
 
 mongoose.connection.on('open',function(){
   console.log("Database connection")

@@ -1,5 +1,6 @@
 const DeleteHouse = require("../models/deletedHouses.model").deletedHouse;
 const House = require('../models/house.model').House;
+const cloudinary = require('../utils/cloudinary')
 
 async function createHouse(req, res){
     const ownerName = req.body.ownerName;
@@ -18,6 +19,7 @@ async function createHouse(req, res){
     const bathrooms = req.body.bathrooms;
     const terrainArea = req.body.terrainArea;
     const buildingArea = req.body.buildingArea;
+    const result = await cloudinary.uploader.upload(req.file.path);
 
         try {
             const newHouse = await new House({
@@ -28,6 +30,7 @@ async function createHouse(req, res){
                 description: description,
                 address: address,
                 location: location,
+                image: result.secure_url,
                 dealType: dealType,
                 price: price,
                 buildingType: buildingType,

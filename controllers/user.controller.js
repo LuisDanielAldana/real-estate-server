@@ -10,7 +10,7 @@ async function createUser(req, res){
     const email = req.body.email;
     const phone = req.body.phone
 
-    if (firstname && lastname && username && password && email){
+    if (firstname && lastname && username && password && email && phone){
         try {
             const newUser = await new User({
                 firstname: firstname,
