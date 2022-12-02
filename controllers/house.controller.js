@@ -1,6 +1,7 @@
 const DeleteHouse = require("../models/deletedHouses.model").deletedHouse;
 const House = require('../models/house.model').House;
 const cloudinary = require('../utils/cloudinary')
+const {DeletedUser} = require("../models/deletedUser.model");
 
 async function createHouse(req, res){
     const ownerName = req.body.ownerName;
@@ -55,8 +56,6 @@ async function createHouse(req, res){
         }
 
 }
-
-
 
 async function findHouses(req, res){
     try {
@@ -127,6 +126,7 @@ async function findHouses(req, res){
         })
     }
 }
+
 async function addFavorite(req, res){
     const _id = req.body._id
     try{
@@ -146,6 +146,7 @@ async function addFavorite(req, res){
         })
     }
 }
+
 async function removeFavorite(req, res){
     const _id = req.body._id
     try{
@@ -165,6 +166,7 @@ async function removeFavorite(req, res){
         })
     }
 }
+
 async function findFavorites(req, res){
     try {
         const houses = await House.find(
@@ -237,6 +239,7 @@ async function editHouse(req, res){
         })
     }
 }
+
 async function deleteHouse(req, res){
     const _id = req.body._id
     try{
@@ -253,6 +256,7 @@ async function deleteHouse(req, res){
                 description: houseTodelete.description,
                 address: houseTodelete.address,
                 location: houseTodelete.location,
+                image: houseTodelete.image,
                 dealType: houseTodelete.dealType,
                 price: houseTodelete.price,
                 buildingType: houseTodelete.buildingType,
@@ -320,6 +324,66 @@ async function deleteImage(req, res){
     }
 }
 
+async function findDeletedHouses(req, res){
+    try {
+        const deletedHouses = await DeleteHouse.find({})
+        res.status(200).json({
+            message: "All deleted houses in DB",
+            obj: deletedHouses,
+        })
+    } catch (e){
+        res.status(400).json({
+            message: "Can't find deleted houses",
+            obj:null
+        })
+    }
+}
+
+async function recoverHouse(req, res){
+    const _id = req.body._id
+    try{
+        const houseToRecover = await DeleteHouse.findOne(
+            {_id: _id}
+        )
+        console.log(houseToRecover)
+        const backupHouse = await new House(
+            {
+                ownerName: houseToRecover.ownerName,
+                ownerEmail: houseToRecover.ownerEmail,
+                ownerPhone: houseToRecover.ownerPhone,
+                houseHeader: houseToRecover.houseHeader,
+                description: houseToRecover.description,
+                address: houseToRecover.address,
+                location: houseToRecover.location,
+                image: houseToRecover.image,
+                dealType: houseToRecover.dealType,
+                price: houseToRecover.price,
+                buildingType: houseToRecover.buildingType,
+                availability: houseToRecover.availability,
+                extraConstruction: houseToRecover.extraConstruction,
+                bedrooms: houseToRecover.bedrooms,
+                bathrooms: houseToRecover.bathrooms,
+                terrainArea: houseToRecover.terrainArea,
+                buildingArea: houseToRecover.buildingArea,
+            }
+        ).save()
+        const recoveredHouse = await DeleteHouse.deleteOne(
+            {_id: _id}
+        )
+        res.status(200).json({
+            message: "House Recovered",
+            obj: recoveredHouse
+        })
+    } catch (e) {
+        console.log(e)
+        res.status(400).json({
+            message: "Something happened when recovering house",
+            obj: null
+        })
+    }
+
+}
+
 module.exports = {
     createHouse,
     findHouses,
@@ -329,6 +393,7 @@ module.exports = {
     editHouse,
     deleteHouse,
     addImage,
-    deleteImage
+    deleteImage,
+    findDeletedHouses
 
 }
