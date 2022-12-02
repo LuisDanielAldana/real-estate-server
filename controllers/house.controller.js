@@ -280,6 +280,46 @@ async function deleteHouse(req, res){
     }
 }
 
+async function addImage(req, res){
+    const _id = req.body._id;
+    const result = await cloudinary.uploader.upload(req.file.path);
+    try{
+        const newImage = await House.updateOne(
+            {_id:_id},
+            {$push: {image: result.secure_url}}
+        )
+        res.status(200).json({
+            message: "Image added",
+            obj: newImage,
+        })
+    }catch (e){
+        res.status(400).json({
+            message: "Can't add image",
+            obj: null
+        })
+    }
+}
+
+async function deleteImage(req, res){
+    const _id = req.body._id;
+    const imageToDelete = req.body.url
+    try{
+        const imageDeleted = await House.updateOne(
+            {_id:_id},
+            {$pull: {image: imageToDelete}}
+        )
+        res.status(200).json({
+            message: "Image deleted",
+            obj: imageDeleted,
+        })
+    }catch (e){
+        res.status(400).json({
+            message: "Can't delete image",
+            obj: null
+        })
+    }
+}
+
 module.exports = {
     createHouse,
     findHouses,
@@ -287,6 +327,8 @@ module.exports = {
     removeFavorite,
     findFavorites,
     editHouse,
-    deleteHouse
+    deleteHouse,
+    addImage,
+    deleteImage
 
 }

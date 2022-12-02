@@ -28,4 +28,8 @@ router.post('/editHouse', houseController.editHouse)
 
 router.post('/delete', houseController.deleteHouse)
 
+router.post('addImage',upload.single("image"),houseController.addImage)
+
+router.post('deleteImage',houseController.deleteImage)
+
 module.exports = router;
