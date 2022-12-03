@@ -21,5 +21,7 @@ router.post('/addFavorite', userController.addFavorite);
 
 router.post('/removeFavorite', userController.removeFavorite);
 
+router.post('/findFavorites', userController.findFavorites);
+
 
 module.exports = router;

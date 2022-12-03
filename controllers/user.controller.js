@@ -86,7 +86,6 @@ async function login(req, res){
         })
     }
 }
-
 async function deleteUser(req, res){
     const _id = req.body._id
     try{
@@ -119,7 +118,6 @@ async function deleteUser(req, res){
         })
     }
 }
-
 async function addFavorite(req, res){
     try {
         const us_id = req.body.us_id
@@ -140,7 +138,6 @@ async function addFavorite(req, res){
     }
 
 }
-
 async function removeFavorite(req, res){
     try {
         const us_id = req.body.us_id
@@ -160,6 +157,23 @@ async function removeFavorite(req, res){
         })
     }
 }
+async function findFavorites(req, res){
+    const user_id = req.body.user_id
+    try {
+        const houses = await User.findOne(
+            {_id:user_id},
+            {favorites:1}).populate({path:"favorites", model:"House"})
+        res.status(200).json({
+            message: "Favorite houses",
+            obj: houses
+        })
+    } catch (e) {
+        res.status(400).json({
+            message: "Can't find favorite houses",
+            obj: null
+        })
+    }
+}
 
 module.exports = {
     createUser,
@@ -167,5 +181,6 @@ module.exports = {
     login,
     deleteUser,
     addFavorite,
-    removeFavorite
+    removeFavorite,
+    findFavorites
 }
