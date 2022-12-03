@@ -1,7 +1,11 @@
 const House = require("../models/house.model").House;
 const DeleteUser = require("../models/deletedUser.model").DeletedUser;
 const User = require('../models/user.model').User;
-const authController = require('../controllers/auth.controller')
+const authController = require('../controllers/auth.controller');
+const REDIS_PORT = 6379;
+
+import redis from 'redis'
+const client = redis.createClient(REDIS_PORT)
 
 async function createUser(req, res){
     const firstname = req.body.firstname;
