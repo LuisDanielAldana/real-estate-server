@@ -8,6 +8,7 @@ const upload = require("../utils/multer");
 
 
 const houseController = require('../controllers/house.controller')
+const authController = require('../controllers/auth.controller')
 
 /* GET houses listing. */
 router.get('/', function(req, res, next) {
@@ -16,7 +17,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/create',upload.single("image"), houseController.createHouse);
 
-router.post('/find',houseController.findHouses);
+router.post('/find',authController.validateJWT,houseController.findHouses);
 
 router.post('/favorites',houseController.findFavorites)
 

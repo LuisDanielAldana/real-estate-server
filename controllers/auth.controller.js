@@ -1,8 +1,8 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 const config = require("../config").configuration
 
-async function generateJWT(){
-        return await jwt.sign({}, config.jwt.secretKey);
+function generateJWT(username) {
+    return jwt.sign(username, process.env.ACCES_TOKEN_SECRET);
 }
 
 async function validateJWT(req, res, next) {
@@ -16,7 +16,7 @@ async function validateJWT(req, res, next) {
         }
     }
     try{
-        await jwt.verify(authToken, config.jwt.secretKey);
+        await jwt.verify(authToken, process.env.ACCES_TOKEN_SECRET);
         next()
 ;    } catch (e){
         res.status(401).json({
@@ -24,6 +24,17 @@ async function validateJWT(req, res, next) {
         })
     }
 }
+
+// function validateJWT(req, res, next){
+//    const bearerHeader = req.headers['authorization']
+//    if(typeof bearerHeader !== 'undefined'){
+//        const bearerToken = bearerHeader.split(' ')[1]
+//        req.token = bearerToken
+//        next()
+//    } else {
+//        res.status(403)
+//    }
+// }
 
 module.exports = {
     generateJWT,

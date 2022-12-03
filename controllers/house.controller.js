@@ -1,7 +1,6 @@
 const DeleteHouse = require("../models/deletedHouses.model").deletedHouse;
 const House = require('../models/house.model').House;
 const cloudinary = require('../utils/cloudinary')
-const {DeletedUser} = require("../models/deletedUser.model");
 
 async function createHouse(req, res){
     const ownerName = req.body.ownerName;

@@ -11,9 +11,9 @@ router.get('/', function(req, res, next) {
 
 router.post('/create', userController.createUser);
 
-router.get('/find', userController.findUsers);
+router.post('/find',authController.validateJWT ,userController.findUsers);
 
-router.post('/login',userController.login);
+router.post('/login', userController.login);
 
 router.post('/delete',userController.deleteUser);
 

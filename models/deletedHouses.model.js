@@ -119,7 +119,11 @@ const deletedHouseSchema = new mongoose.Schema(
             type: Number,
             required: true,
             default:""
-        }
+        },
+        date: {
+            type: Date,
+            default: Date.now
+        },
     }
 );
 

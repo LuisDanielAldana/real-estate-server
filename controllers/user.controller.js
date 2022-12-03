@@ -1,6 +1,7 @@
 const House = require("../models/house.model").House;
 const DeleteUser = require("../models/deletedUser.model").DeletedUser;
 const User = require('../models/user.model').User;
+const authController = require('../controllers/auth.controller')
 
 async function createUser(req, res){
     const firstname = req.body.firstname;
@@ -62,9 +63,11 @@ async function login(req, res){
                 password: password
             })
         if(user) {
+            const token = authController.generateJWT({username})
             res.status(200).json({
                 message: "Has iniciado sesion",
                 obj: user,
+                authToken: token
             })
         }
         else{

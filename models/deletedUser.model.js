@@ -37,7 +37,11 @@ const UserSchema = new mongoose.Schema(
             ref: "House",
             default:[""]
 
-        }
+        },
+        date: {
+            type: Date,
+            default: Date.now
+        },
     }
 );
 
