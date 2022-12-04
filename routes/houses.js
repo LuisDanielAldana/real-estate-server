@@ -9,15 +9,18 @@ const upload = require("../utils/multer");
 
 const houseController = require('../controllers/house.controller')
 const authController = require('../controllers/auth.controller')
+const basicAuth = require("express-basic-auth");
 
 /* GET houses listing. */
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
 });
 
-router.post('/create',upload.single("image"), houseController.createHouse);
+router.post('/create',upload.single("image"),basicAuth({
+    users: {'admin':'supersecret'}
+}), houseController.createHouse);
 
-router.post('/find',authController.validateJWT,houseController.findHouses);
+router.post('/find',authController.validateJWT, houseController.findHouses);
 
 router.post('/favorites',houseController.findFavorites)
 

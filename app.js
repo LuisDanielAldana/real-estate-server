@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const cors = require('cors');
+// const redis = require('redis')
 
 const config = require ('./config').configuration
 
@@ -16,6 +17,7 @@ mongoose.connect(config.mongodb.url);
 mongoose.connection.on('open',function(){
   console.log("Database connection")
 });
+
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');

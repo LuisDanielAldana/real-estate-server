@@ -1,8 +1,12 @@
 const DeleteHouse = require("../models/deletedHouses.model").deletedHouse;
 const House = require('../models/house.model').House;
+const User = require('../models/user.model').User;
 const cloudinary = require('../utils/cloudinary')
 
 async function createHouse(req, res){
+
+    const ownerUser = req.body.houseOwner;
+
     const ownerName = req.body.ownerName;
     const ownerEmail = req.body.ownerEmail;
     const ownerPhone = req.body.ownerPhone;
@@ -22,6 +26,9 @@ async function createHouse(req, res){
     const result = await cloudinary.uploader.upload(req.file.path);
 
         try {
+            const owner = await User.findOne(
+                {username: ownerUser},
+            )
             const newHouse = await new House({
                 ownerName: ownerName,
                 ownerEmail: ownerEmail,
@@ -42,9 +49,14 @@ async function createHouse(req, res){
                 buildingArea: buildingArea
 
             }).save();
+            const houseAndOwner = await User.updateOne(
+                {_id:owner._id},
+                {$push: {houses: newHouse._id}}
+            )
             res.status(200).json({
                 message: "House Created",
-                obj: newHouse
+                obj: newHouse,
+                house: houseAndOwner
             })
         } catch (err){
             console.error(err);

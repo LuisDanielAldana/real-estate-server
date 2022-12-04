@@ -3,6 +3,7 @@ var router = express.Router();
 
 const userController = require('../controllers/user.controller')
 const authController = require('../controllers/auth.controller')
+const middlewareController = require('../middlewares/middlewares')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -21,7 +22,7 @@ router.post('/addFavorite', userController.addFavorite);
 
 router.post('/removeFavorite', userController.removeFavorite);
 
-router.post('/findFavorites', userController.findFavorites);
+router.post('/findFavorites',middlewareController.cache,  userController.findFavorites);
 
 
 module.exports = router;

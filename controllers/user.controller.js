@@ -2,10 +2,10 @@ const House = require("../models/house.model").House;
 const DeleteUser = require("../models/deletedUser.model").DeletedUser;
 const User = require('../models/user.model').User;
 const authController = require('../controllers/auth.controller');
-// const REDIS_PORT = 6379;
-//
-// import redis from 'redis'
-// const client = redis.createClient(REDIS_PORT)
+
+
+// const redis = require('redis')
+// const client = redis.createClient()
 
 async function createUser(req, res){
     const firstname = req.body.firstname;
@@ -167,6 +167,7 @@ async function findFavorites(req, res){
         const houses = await User.findOne(
             {_id:user_id},
             {favorites:1}).populate({path:"favorites", model:"House"})
+        // await client.setEx(user_id, houses)
         res.status(200).json({
             message: "Favorite houses",
             obj: houses
