@@ -253,6 +253,26 @@ async function unbanUser(req, res){
         })
     }
 }
+async function findByUsername(req, res) {
+    const username = req.body.username
+    try {
+        const users = await User.find(
+            {username: username},
+            {
+                _id:0,
+                username: 1}
+        )
+        res.status(200).json({
+            message: "Al users by username",
+            obj: users
+        })
+    } catch (e) {
+        res.status(500).json({
+            message: "Can't find users",
+            obj: null
+        })
+    }
+}
 
 module.exports = {
     createUser,
@@ -264,5 +284,6 @@ module.exports = {
     findFavorites,
     editUser,
     banUser,
-    unbanUser
+    unbanUser,
+    findByUsername
 }

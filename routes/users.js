@@ -1,16 +1,5 @@
 var express = require('express');
 var router = express.Router();
-const redis = require('redis')
-
-let redisClient;
-
-(async () => {
-  redisClient = redis.createClient();
-
-  redisClient.on("error", (error) => console.error(`Error : ${error}`));
-
-  await redisClient.connect();
-})();
 
 const userController = require('../controllers/user.controller')
 const authController = require('../controllers/auth.controller')
@@ -38,7 +27,7 @@ router.post('/addFavorite', userController.addFavorite);
 
 router.post('/removeFavorite', userController.removeFavorite);
 
-router.post('/findFavorites', findFavorites);
+router.post('/findFavorites',middlewareController.cache,  userController.findFavorites);
 
 router.post('/editUser',basicAuth({
   users: {'admin':'supersecret'}
@@ -52,50 +41,9 @@ router.post('/unbanUser',basicAuth({
   users: {'admin':'supersecret'}
 }), userController.unbanUser)
 
+router.post('/findByUsername',basicAuth({
+  users: {'admin':'supersecret'}
+}),userController.findByUsername )
+
 
 module.exports = router;
-
-//Find favorites function
-async function findFavorites(req, res){
-  let isCached = false;
-  const user_id = req.body.user_id
-  try {
-    const cacheResults = await redisClient.get(user_id);
-    if (cacheResults) {
-      isCached = true;
-      results = JSON.parse(cacheResults);
-      res.status(200).json({
-        message: "Tres",
-        obj: houses
-      })
-    } else {
-      const houses = await User.findOne(
-          {_id: user_id},
-          {favorites: 1}).populate({path: "favorites", model: "House"})
-      await redisClient.set(user_id, JSON.stringify(houses));
-      res.status(200).json({
-        message: "Dos",
-        obj: houses
-      })
-    }
-
-  } catch (e) {
-    res.status(400).json({
-      message: "Can't find favorite houses",
-      obj: null
-    })
-  }
-}
-
-//Cache middleware
-function cache (req, res, next) {
-  const user_id = req.body._id
-  client.get(user_id, (err, data) => {
-    if(err) throw err;
-    if (data !== null){
-      res.send(user_id, data)
-    } else {
-      next()
-    }
-  })
-}
