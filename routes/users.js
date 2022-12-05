@@ -64,16 +64,21 @@ async function findFavorites(req, res){
     if (cacheResults) {
       isCached = true;
       results = JSON.parse(cacheResults);
+      res.status(200).json({
+        message: "Tres",
+        obj: houses
+      })
     } else {
       const houses = await User.findOne(
           {_id: user_id},
           {favorites: 1}).populate({path: "favorites", model: "House"})
       await redisClient.set(user_id, JSON.stringify(houses));
+      res.status(200).json({
+        message: "Dos",
+        obj: houses
+      })
     }
-    res.status(200).json({
-      message: "Favorite houses",
-      obj: houses
-    })
+
   } catch (e) {
     res.status(400).json({
       message: "Can't find favorite houses",
