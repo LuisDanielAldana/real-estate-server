@@ -67,7 +67,6 @@ async function createHouse(req, res){
         }
 
 }
-
 async function findHouses(req, res){
     try {
         console.log(req.body)
@@ -137,7 +136,6 @@ async function findHouses(req, res){
         })
     }
 }
-
 async function addFavorite(req, res){
     const _id = req.body._id
     try{
@@ -157,7 +155,6 @@ async function addFavorite(req, res){
         })
     }
 }
-
 async function removeFavorite(req, res){
     const _id = req.body._id
     try{
@@ -177,7 +174,6 @@ async function removeFavorite(req, res){
         })
     }
 }
-
 async function findFavorites(req, res){
     try {
         const houses = await House.find(
@@ -197,7 +193,6 @@ async function findFavorites(req, res){
         })
     }
 }
-
 async function editHouse(req, res){
     const _id = req.body._id
     const ownerName = req.body.ownerName;

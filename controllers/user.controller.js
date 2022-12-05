@@ -67,12 +67,19 @@ async function login(req, res){
                 password: password
             })
         if(user) {
-            const token = authController.generateJWT({username})
-            res.status(200).json({
-                message: "Has iniciado sesion",
-                obj: user,
-                authToken: token
-            })
+            if(user.banned == true){
+                res.status(402).json({
+                    message: "User is banned",
+                    obj: user
+                })
+            } else {
+                const token = authController.generateJWT({username})
+                res.status(200).json({
+                    message: "Has iniciado sesion",
+                    obj: user,
+                    authToken: token
+                })
+            }
         }
         else{
             console.log("No")
@@ -179,6 +186,73 @@ async function findFavorites(req, res){
         })
     }
 }
+async function editUser(req, res){
+    const _id = req.body._id;
+    const firstname = req.body.firstname;
+    const lastname = req.body.lastname;
+    const username = req.body.username;
+    const password = req.body.password;
+    const email = req.body.email;
+    const phone = req.body.phone
+    try {
+        const editedUser = await User.updateOne(
+            {_id: _id},
+            {
+                firstname: firstname,
+                lastname:lastname,
+                username: username,
+                password:password,
+                email:email,
+                phone:phone
+            }
+        )
+        res.status(200).json({
+            message: "User succesfully edited",
+            obj: editedUser
+        })
+    } catch (e) {
+        res.status(400).json({
+            message: "Cant edit user",
+            obj: null
+        })
+    }
+}
+async function banUser(req, res){
+    const _id = req.body._id;
+    try {
+        const user = await User.updateOne(
+            {_id: _id},
+            {banned:true}
+        )
+        res.status(200).json({
+            message: "User banned",
+            obj: user
+        })
+    } catch (e) {
+        res.status(400).json({
+            message: "Error banning user",
+            obj: null
+        })
+    }
+}
+async function unbanUser(req, res){
+    const _id = req.body._id;
+    try {
+        const user = await User.updateOne(
+            {_id: _id},
+            {banned:false}
+        )
+        res.status(200).json({
+            message: "User unbanned",
+            obj: user
+        })
+    } catch (e) {
+        res.status(400).json({
+            message: "Error unbanning user",
+            obj: null
+        })
+    }
+}
 
 module.exports = {
     createUser,
@@ -187,5 +261,8 @@ module.exports = {
     deleteUser,
     addFavorite,
     removeFavorite,
-    findFavorites
+    findFavorites,
+    editUser,
+    banUser,
+    unbanUser
 }

@@ -41,6 +41,10 @@ const UserSchema = new mongoose.Schema(
             type: [mongoose.Schema.Types.ObjectId],
             ref: "House",
             required:false
+        },
+        banned: {
+           type: Boolean,
+            default: false
         }
     }
 );
