@@ -245,7 +245,6 @@ async function editHouse(req, res){
         })
     }
 }
-
 async function deleteHouse(req, res){
     const _id = req.body._id
     try{
@@ -289,7 +288,6 @@ async function deleteHouse(req, res){
         })
     }
 }
-
 async function addImage(req, res){
     const _id = req.body._id;
     const result = await cloudinary.uploader.upload(req.file.path);
@@ -309,7 +307,6 @@ async function addImage(req, res){
         })
     }
 }
-
 async function deleteImage(req, res){
     const _id = req.body._id;
     const imageToDelete = req.body.url
@@ -329,7 +326,6 @@ async function deleteImage(req, res){
         })
     }
 }
-
 async function findDeletedHouses(req, res){
     try {
         const deletedHouses = await DeleteHouse.find({})
@@ -344,7 +340,6 @@ async function findDeletedHouses(req, res){
         })
     }
 }
-
 async function recoverHouse(req, res){
     const _id = req.body._id
     try{

@@ -285,6 +285,26 @@ async function findByUsername(req, res) {
         })
     }
 }
+async function(req, res){
+    const username = req.body.username
+    const newPassword = req.body.newPassword
+
+    try {
+        const newPass = await User.updateOne(
+            {username: username},
+            {password: newPassword}
+        )
+        res.status(200).json({
+            message: "Password updated",
+            obj: newPass
+        })
+    } catch (e){
+        res.status(400).json({
+            message: "Can't update password"
+        })
+
+    }
+}
 
 
 module.exports = {

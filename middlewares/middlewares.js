@@ -1,14 +1,11 @@
-const REDIS_PORT = 6379;
-
-const redis = require('redis')
-const client = redis.createClient(REDIS_PORT)
+const client = require('../controllers/redis.controller').client
 
 function cache (req, res, next) {
-    const user_id = req.body._id
+    const user_id = req.body.user_id
     client.get(user_id, (err, data) => {
         if(err) throw err;
         if (data !== null){
-            res.send(user_id, data)
+            res.return(data)
         } else {
             next()
         }
