@@ -45,5 +45,7 @@ router.post('/findByUsername',basicAuth({
   users: {'admin':'supersecret'}
 }),userController.findByUsername )
 
+router.post('/changePassword', userController.changePassword)
+
 
 module.exports = router;

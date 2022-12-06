@@ -285,7 +285,7 @@ async function findByUsername(req, res) {
         })
     }
 }
-async function(req, res){
+async function changePassword(req, res){
     const username = req.body.username
     const newPassword = req.body.newPassword
 
@@ -318,5 +318,6 @@ module.exports = {
     editUser,
     banUser,
     unbanUser,
-    findByUsername
+    findByUsername,
+    changePassword
 }
