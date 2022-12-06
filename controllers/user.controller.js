@@ -3,9 +3,13 @@ const DeleteUser = require("../models/deletedUser.model").DeletedUser;
 const User = require('../models/user.model').User;
 const authController = require('../controllers/auth.controller');
 
+//Configuracion de Redis
+//redis://default:MecY7yM8XZuShbTCYbekMRSPce9z0SUJ@redis-12190.c12.us-east-1-4.ec2.cloud.redislabs.com:12190
+const redisURI = 'redis://default:MecY7yM8XZuShbTCYbekMRSPce9z0SUJ@redis-12190.c12.us-east-1-4.ec2.cloud.redislabs.com:12190';
+const clientRedis = require('redis').createClient({url: redisURI});
+clientRedis.on('error', (err) => console.log('Redis Client Error', err));
+clientRedis.connect();
 
-// const redis = require('redis')
-// const client = redis.createClient()
 
 async function createUser(req, res){
     const firstname = req.body.firstname;
@@ -174,7 +178,15 @@ async function findFavorites(req, res){
         const houses = await User.findOne(
             {_id:user_id},
             {favorites:1}).populate({path:"favorites", model:"House"})
-        // await client.setEx(user_id, houses)
+        console.log(houses)
+        const favoriteHouses = houses.favorites
+        console.log(favoriteHouses)
+        favoriteHouses.forEach(element => {
+            console.log(JSON.stringify(houses._id).replaceAll('"',''));
+            clientRedis.set(JSON.stringify(houses._id).replaceAll('"',''),JSON.stringify(element));/*, {
+                    EX: 10,
+                    NX: true});*/
+        });
         res.status(200).json({
             message: "Favorite houses",
             obj: houses
@@ -273,6 +285,7 @@ async function findByUsername(req, res) {
         })
     }
 }
+
 
 module.exports = {
     createUser,

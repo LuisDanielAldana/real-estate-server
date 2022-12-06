@@ -27,7 +27,7 @@ router.post('/addFavorite', userController.addFavorite);
 
 router.post('/removeFavorite', userController.removeFavorite);
 
-router.post('/findFavorites',middlewareController.cache,  userController.findFavorites);
+router.post('/findFavorites',  userController.findFavorites);
 
 router.post('/editUser',basicAuth({
   users: {'admin':'supersecret'}
