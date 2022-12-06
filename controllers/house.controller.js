@@ -400,6 +400,7 @@ module.exports = {
     deleteHouse,
     addImage,
     deleteImage,
-    findDeletedHouses
+    findDeletedHouses,
+    recoverHouse
 
 }

@@ -22,20 +22,34 @@ router.post('/create',upload.single("image"),basicAuth({
 
 router.post('/find',authController.validateJWT, houseController.findHouses);
 
-router.post('/favorites',houseController.findFavorites)
+router.post('/favorites',authController.validateJWT,houseController.findFavorites)
 
-router.post('/addFavorite',houseController.addFavorite)
+router.post('/addFavorite',authController.validateJWT,houseController.addFavorite)
 
-router.post('/removeFavorite',houseController.removeFavorite)
+router.post('/removeFavorite',authController.validateJWT,houseController.removeFavorite)
 
-router.post('/editHouse', houseController.editHouse)
+router.post('/editHouse',basicAuth({
+    users: {'admin':'supersecret'}
+}), houseController.editHouse)
 
-router.post('/delete', houseController.deleteHouse)
+router.post('/delete',basicAuth({
+    users: {'admin':'supersecret'}
+}), houseController.deleteHouse)
 
-router.post('/addImage',upload.single("image"),houseController.addImage)
+router.post('/addImage',basicAuth({
+    users: {'admin':'supersecret'}
+}), upload.single("image"),houseController.addImage)
 
-router.post('/deleteImage',houseController.deleteImage)
+router.post('/deleteImage', basicAuth({
+    users: {'admin':'supersecret'}
+}),houseController.deleteImage)
 
-router.post('/deletedHouses',houseController.findDeletedHouses)
+router.post('/deletedHouses',basicAuth({
+    users: {'admin':'supersecret'}
+}),houseController.findDeletedHouses)
+
+router.post('/recoverHouse',basicAuth({
+    users: {'admin':'supersecret'}
+}), houseController.recoverHouse)
 
 module.exports = router;
