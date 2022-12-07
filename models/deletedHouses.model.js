@@ -57,7 +57,6 @@ const deletedHouseSchema = new mongoose.Schema(
             required: true,
             default:""
         },
-        //houseNumber, street, district, city, postalCode, County, Country
         address: {
             type: String,
             required: true,
@@ -83,13 +82,11 @@ const deletedHouseSchema = new mongoose.Schema(
             required: true,
             default:""
         },
-        //Casa o departamento
         buildingType: {
             type: String,
             required: true,
             default:""
         },
-        //Rentada, disponible, vendida
         availability:{
             type: String,
             required: true,
