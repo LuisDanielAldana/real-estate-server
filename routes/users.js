@@ -15,7 +15,7 @@ router.post('/create', basicAuth({
   users: {'admin':'supersecret'}
 }), userController.createUser);
 
-router.post('/find',authController.validateJWT ,userController.findUsers);
+router.post('/find',userController.findUsers);
 
 router.post('/login', userController.login);
 

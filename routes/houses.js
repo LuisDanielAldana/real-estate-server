@@ -36,13 +36,9 @@ router.post('/delete',basicAuth({
     users: {'admin':'supersecret'}
 }), houseController.deleteHouse)
 
-router.post('/addImage',basicAuth({
-    users: {'admin':'supersecret'}
-}), upload.single("image"),houseController.addImage)
+router.post('/addImage', upload.single("image"),houseController.addImage)
 
-router.post('/deleteImage', basicAuth({
-    users: {'admin':'supersecret'}
-}),houseController.deleteImage)
+router.post('/deleteImage', houseController.deleteImage)
 
 router.post('/deletedHouses',basicAuth({
     users: {'admin':'supersecret'}
