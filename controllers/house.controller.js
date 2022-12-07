@@ -4,9 +4,7 @@ const User = require('../models/user.model').User;
 const cloudinary = require('../utils/cloudinary')
 
 async function createHouse(req, res){
-
     const ownerUser = req.body.houseOwner;
-
     const ownerName = req.body.ownerName;
     const ownerEmail = req.body.ownerEmail;
     const ownerPhone = req.body.ownerPhone;
@@ -24,7 +22,6 @@ async function createHouse(req, res){
     const terrainArea = req.body.terrainArea;
     const buildingArea = req.body.buildingArea;
     // const result = await cloudinary.uploader.upload(req.file.path);
-
         try {
             const owner = await User.findOne(
                 {username: ownerUser},
@@ -78,8 +75,6 @@ async function findHouses(req, res){
         const houseLong = req.body.lng
         const houseLat = req.body.lat
         const _id = req.body._id
-
-
         if (dealType || buildingType || minPrice || maxPrice || (houseLong && houseLat) || _id ) {
             query = {$and: []};
 
@@ -132,63 +127,6 @@ async function findHouses(req, res){
         console.error("Error Finding Houses")
         res.status(400).json({
             message: "Something happened when finding houses",
-            obj: null
-        })
-    }
-}
-async function addFavorite(req, res){
-    const _id = req.body._id
-    try{
-        const favHouse = await House.updateOne(
-            {_id: _id},
-            {favorite: "true"}
-        )
-        res.status(200).json({
-            message: "House added to favorite:",
-            obj: favHouse,
-        })
-    } catch (e){
-        console.error("Error Adding favorites")
-        res.status(400).json({
-            message: "Something happened when adding favorite houses",
-            obj: null
-        })
-    }
-}
-async function removeFavorite(req, res){
-    const _id = req.body._id
-    try{
-        const unfavHouse = await House.updateOne(
-            {_id: _id},
-            {favorite: false}
-        )
-        res.status(200).json({
-            message: "House removed from favorite:",
-            obj: unfavHouse,
-        })
-    } catch (e){
-        console.error("Error removing favorites")
-        res.status(400).json({
-            message: "Something happened when removing favorite houses",
-            obj: null
-        })
-    }
-}
-async function findFavorites(req, res){
-    try {
-        const houses = await House.find(
-            {
-                favorite: true
-            }
-        )
-        res.status(200).json({
-            message: "Favorite Houses",
-            obj: houses
-        })
-    } catch (e){
-        console.error("Error Finding favorites")
-        res.status(400).json({
-            message: "Something happened when finding favorite houses",
             obj: null
         })
     }
@@ -405,9 +343,6 @@ async function deleteAll(req, res){
 module.exports = {
     createHouse,
     findHouses,
-    addFavorite,
-    removeFavorite,
-    findFavorites,
     editHouse,
     deleteHouse,
     addImage,

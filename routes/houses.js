@@ -22,12 +22,6 @@ router.post('/create',upload.single("image"),basicAuth({
 
 router.post('/find',authController.validateJWT, houseController.findHouses);
 
-router.post('/favorites',authController.validateJWT,houseController.findFavorites)
-
-router.post('/addFavorite',authController.validateJWT,houseController.addFavorite)
-
-router.post('/removeFavorite',authController.validateJWT,houseController.removeFavorite)
-
 router.post('/editHouse',basicAuth({
     users: {'admin':'supersecret'}
 }), houseController.editHouse)
