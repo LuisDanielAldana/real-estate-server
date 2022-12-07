@@ -15,7 +15,8 @@ const UserSchema = new mongoose.Schema(
         },
         username: {
            type: String,
-            default:""
+            default:"",
+            required: true
         },
         password: {
            type: String,
@@ -35,7 +36,7 @@ const UserSchema = new mongoose.Schema(
         favorites: {
            type: [mongoose.Schema.Types.ObjectId],
             ref: "House",
-            required:false
+            required:true
         },
         houses: {
             type: [mongoose.Schema.Types.ObjectId],
