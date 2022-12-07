@@ -289,9 +289,10 @@ async function deleteHouse(req, res){
     }
 }
 async function addImage(req, res){
-    const _id = req.params._id;
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const _id = req.body._id;
+    const image = req.body.image;
     try{
+        const result = await cloudinary.uploader.upload(image);
         const newImage = await House.updateOne(
             {_id:_id},
             {$push: {image: result.secure_url}}
