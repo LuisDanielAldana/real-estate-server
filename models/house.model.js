@@ -65,7 +65,7 @@ const HouseSchema = new mongoose.Schema(
         },
         location:{
             type: locationSchema,
-            required: true
+            required: false
         },
         image: {
             type: [String],
