@@ -70,7 +70,7 @@ const HouseSchema = new mongoose.Schema(
         image: {
             type: [String],
             required: true,
-            default:[""]
+            default:["https://res.cloudinary.com/dficrwc6r/image/upload/v1670391101/houses_yfvvef.jpg"]
         },
         //Venta o Renta
         dealType:{
