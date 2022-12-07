@@ -30,7 +30,7 @@ router.post('/delete',basicAuth({
     users: {'admin':'supersecret'}
 }), houseController.deleteHouse)
 
-router.post('/addImage', upload.single("image"),houseController.addImage)
+router.post('/addImage',houseController.addImage)
 
 router.post('/deleteImage', houseController.deleteImage)
 
