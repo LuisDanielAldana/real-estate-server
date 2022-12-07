@@ -230,8 +230,7 @@ async function addImage(req, res){
     const _id = req.body._id;
     try{
         console.log(req.body)
-        console.log(req)
-        const result = await cloudinary.uploader.upload(req.files);
+        const result = await cloudinary.uploader.upload(req.file.path);
         const newImage = await House.updateOne(
             {_id:_id},
             {$push: {image: result.secure_url}}
