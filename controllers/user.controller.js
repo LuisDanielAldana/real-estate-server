@@ -79,7 +79,7 @@ async function login(req, res){
             })
         if(user) {
             if(user.banned == true){
-                res.status(402).json({
+                res.status(401).json({
                     message: "User is banned",
                     obj: user
                 })

@@ -36,7 +36,7 @@ const UserSchema = new mongoose.Schema(
         favorites: {
            type: [mongoose.Schema.Types.ObjectId],
             ref: "House",
-            required:true
+            required:false
         },
         houses: {
             type: [mongoose.Schema.Types.ObjectId],
