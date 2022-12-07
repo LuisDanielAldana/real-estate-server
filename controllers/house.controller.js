@@ -23,7 +23,7 @@ async function createHouse(req, res){
     const bathrooms = req.body.bathrooms;
     const terrainArea = req.body.terrainArea;
     const buildingArea = req.body.buildingArea;
-    const result = await cloudinary.uploader.upload(req.file.path);
+    //const result = await cloudinary.uploader.upload(req.file.path);
 
         try {
             const owner = await User.findOne(
@@ -37,7 +37,7 @@ async function createHouse(req, res){
                 description: description,
                 address: address,
                 location: location,
-                image: result.secure_url,
+                //image: result.secure_url,
                 dealType: dealType,
                 price: price,
                 buildingType: buildingType,
