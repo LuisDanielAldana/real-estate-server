@@ -49,7 +49,14 @@ async function createUser(req, res){
 }
 async function findUsers(req, res){
     try {
-        const user = await User.find({})
+        let query
+        const _id = req.body._id
+        if(_id){
+            query = {_id:_id}
+        } else {
+            query = {}
+        }
+        const user = await User.find(query)
         res.status(200).json({
             message: "All users in DB:",
             obj: user
@@ -305,7 +312,6 @@ async function changePassword(req, res){
 
     }
 }
-
 
 module.exports = {
     createUser,

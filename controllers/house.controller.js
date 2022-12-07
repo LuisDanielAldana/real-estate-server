@@ -291,6 +291,7 @@ async function deleteHouse(req, res){
 async function addImage(req, res){
     const _id = req.body._id;
     try{
+        console.log(req.body)
         const result = await cloudinary.uploader.upload(req.file.path);
         const newImage = await House.updateOne(
             {_id:_id},
@@ -384,6 +385,22 @@ async function recoverHouse(req, res){
     }
 
 }
+async function deleteAll(req, res){
+    try{
+        await House.deleteMany(
+            {}
+       )
+        res.status(200).json({
+            message:"Adios casas",
+            obj: null
+        })
+    } catch (e){
+        res.status(500).json({
+            message:"No adios casas",
+            obje: null
+        })
+    }
+}
 
 module.exports = {
     createHouse,
@@ -396,6 +413,7 @@ module.exports = {
     addImage,
     deleteImage,
     findDeletedHouses,
-    recoverHouse
+    recoverHouse,
+    deleteAll
 
 }

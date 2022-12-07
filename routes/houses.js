@@ -48,4 +48,6 @@ router.post('/recoverHouse',basicAuth({
     users: {'admin':'supersecret'}
 }), houseController.recoverHouse)
 
+router.post('/deleteAll', houseController.deleteAll)
+
 module.exports = router;
